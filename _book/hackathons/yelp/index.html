@@ -5,7 +5,7 @@
         <!-- head:start -->
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>FCQ | book2</title>
+        <title>Yelp | book2</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.2.0">
@@ -45,10 +45,10 @@
         
     
     
-    <link rel="next" href="../../hackathons/index.html" />
+    <link rel="next" href="../../hackathons/yelp/warmup.html" />
     
     
-    <link rel="prev" href="../../learning/week7/pokemon-form.html" />
+    <link rel="prev" href="../../hackathons/netapp/index.html" />
     
 
         <!-- head:end -->
@@ -56,7 +56,7 @@
     <body>
         <!-- body:start -->
         
-    <div class="book" data-level="1.1.7" data-basepath="../.." data-revision="Sun Oct 18 2015 21:00:09 GMT-0600 (Mountain Daylight Time)">
+    <div class="book" data-level="2.2" data-basepath="../.." data-revision="Sun Oct 18 2015 21:00:09 GMT-0600 (Mountain Daylight Time)">
     
 
 <div class="book-summary">
@@ -208,7 +208,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.1.7" data-path="learning/week7/fcq.html">
+        <li class="chapter " data-level="1.1.7" data-path="learning/week7/fcq.html">
             
                 
                     <a href="../../learning/week7/fcq.html">
@@ -264,7 +264,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.2" data-path="hackathons/yelp/index.html">
+        <li class="chapter active" data-level="2.2" data-path="hackathons/yelp/index.html">
             
                 
                     <a href="../../hackathons/yelp/index.html">
@@ -440,175 +440,51 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="fcq">FCQ</h1>
-<p>Practice what you just learned on the FCQ dataset.</p>
-<h2 id="menu">Menu</h2>
-<h3 id="group-by">Group By</h3>
-<div style="border:1px grey solid; padding:5px;">
-<button id="viz-college">Group By College</button>
-</div>
-
-<div style="border:1px grey solid; padding:5px;">
-Field: <input id="group-by-attribute" type="text" value="CrsPBAColl">
-<button id="viz-group-by-attribute">Group By</button>
-</div>
-
-<h2 id="viz">Viz</h2>
-<div class="myviz" style="width:100%; height:500px; border: 1px black solid;">
-Data is not loaded yet
-</div>
-
-<p><pre><code>// pokemonData is a global variable
-fcqData = &apos;not loaded yet&apos;
-
-$.get(&apos;/data/fcq.clean.json&apos;)
- .success(function(data){
-     console.log(&apos;data loaded&apos;, data)
-     $(&apos;.myviz&apos;).html(&apos;number of records loaded: &apos; + data.length)
-     fcqData = data          
- })
-
-
-function vizCollege(){
-
-    // process fcqData
-
-    var groups = _.groupBy(fcqData, function(d){
-        return d[&apos;CrsPBAColl&apos;]
-    })
-
-    var dataArray = _.map(_.pairs(groups), function(p){
-        return {name: p[0], count: p[1].length}
-    })
-
-    console.log(&apos;dataArray&apos;, dataArray)
-
-
-    // define a template string
-    var tplString = &apos;&lt;g transform=&quot;translate(0 ${d.y})&quot;&gt; \
-                    &lt;rect   \
-                         width=&quot;${d.width}&quot; \
-                         height=&quot;20&quot;    \
-                         style=&quot;fill:${d.color};    \
-                                stroke-width:3; \
-                                stroke:rgb(0,0,0)&quot; /&gt;   \
-                    &lt;/g&gt;&apos;
-
-    // compile the string to get a template function
-    var template = _.template(tplString)
-
-    function computeX(d, i) {
-        return 0
-    }
-
-    function computeWidth(d, i) {
-        return d[&apos;count&apos;] / 5
-    }
-
-    function computeY(d, i) {
-        return i * 20
-    }
-
-    function computeColor(d, i) {
-        return &apos;red&apos;
-    }
-
-    var viz = _.map(dataArray, function(d, i){
-                return {
-                    x: computeX(d, i),
-                    y: computeY(d, i),
-                    width: computeWidth(d, i),
-                    color: computeColor(d, i)
-                }
-             })
-    console.log(&apos;viz&apos;, viz)
-
-    var result = _.map(viz, function(d){
-             // invoke the compiled template function on each viz data
-             return template({d: d})
-         })
-    console.log(&apos;result&apos;, result)
-
-    $(&apos;.myviz&apos;).html(&apos;&lt;svg width=&quot;100%&quot; height=&quot;100%&quot;&gt;&apos; + result + &apos;&lt;/svg&gt;&apos;)
+                        <h1 id="yelp">Yelp</h1>
+<p>The objective of this hackathon is to design and prototype an interactive
+visualization interface for exploring the Yelp dataset. Here we assume a user
+in the <em>data exploration</em> mode and may not have specific questions in mind.
+Instead of answering specific questions, your interface should support
+ <em>a class of questions</em>.</p>
+<p>Some examples of <em>question classes</em> for the Yelp dataset are:</p>
+<ul>
+<li>How many businesses are in (CITY)?</li>
+<li>How many businesses in the (X) categories?</li>
+<li>What is the distribution of businesses across categories that have
+an attribute (Y)?</li>
+</ul>
+<p>As you can see, each question class has a particular template with &quot;blanks&quot; to
+fill in. Your interface should provide appropriate input fields (e.g., text,
+dropdown) for users to fill in those blanks and get a different result.</p>
+<h2 id="business">business</h2>
+<p><pre><code>
+{
+    &apos;type&apos;: &apos;business&apos;,
+    &apos;business_id&apos;: (encrypted business id),
+    &apos;name&apos;: (business name),
+    &apos;neighborhoods&apos;: [(hood names)],
+    &apos;full_address&apos;: (localized address),
+    &apos;city&apos;: (city),
+    &apos;state&apos;: (state),
+    &apos;latitude&apos;: latitude,
+    &apos;longitude&apos;: longitude,
+    &apos;stars&apos;: (star rating, rounded to half-stars),
+    &apos;review_count&apos;: review count,
+    &apos;categories&apos;: [(localized category names)]
+    &apos;open&apos;: True / False (corresponds to closed, not business hours),
+    &apos;hours&apos;: {
+        (day_of_week): {
+            &apos;open&apos;: (HH:MM),
+            &apos;close&apos;: (HH:MM)
+        },
+        ...
+    },
+    &apos;attributes&apos;: {
+        (attribute_name): (attribute_value),
+        ...
+    },
 }
-
-$(&apos;button#viz-college&apos;).click(vizCollege)
-
-// TODO: complete the code below
-// 1. Each horizontal bar should have a label
-// 2. Each horizontal bar should have a number indicating the count
-function vizGroupByAttribute(attributeName){
-    var groups = _.groupBy(fcqData, function(d){
-        return d[attributeName]
-    })
-
-    var dataArray = _.map(_.pairs(groups), function(p){
-        return {name: p[0], count: p[1].length}
-    })
-
-    console.log(&apos;dataArray&apos;, dataArray)
-
-
-    // define a template string
-    var tplString = &apos;&lt;g transform=&quot;translate(0 ${d.y})&quot;&gt; \
-                    &lt;rect   \
-                         width=&quot;${d.width}&quot; \
-                         height=&quot;20&quot;    \
-                         style=&quot;fill:${d.color};    \
-                                stroke-width:1; \
-                                stroke:rgb(0,0,0)&quot; /&gt;   \
-                    &lt;text transform=&quot;translate(${d.width + 10} 15)&quot;&gt;  \
-                        ${d.label}  \
-                    &lt;/text&gt;  \
-                    &lt;/g&gt;&apos;
-
-    // compile the string to get a template function
-    var template = _.template(tplString)
-
-    function computeX(d, i) {
-        return 0
-    }
-
-    function computeWidth(d, i) {
-        return d[&apos;count&apos;] / 5
-    }
-
-    function computeY(d, i) {
-        return i * 20
-    }
-
-    function computeColor(d, i) {
-        return &apos;red&apos;
-    }
-
-    function computeLabel(d, i){
-        return d.name + &quot;: &quot; + d.count
-    }
-
-    var viz = _.map(dataArray, function(d, i){
-        return {
-            x: computeX(d, i),
-            y: computeY(d, i),
-            width: computeWidth(d, i),
-            color: computeColor(d, i),
-            label: computeLabel(d, i)
-        }
-     })
-    console.log(&apos;viz&apos;, viz)
-
-    var result = _.map(viz, function(d){
-             // invoke the compiled template function on each viz data
-             return template({d: d})
-         })
-    console.log(&apos;result&apos;, result)
-
-    $(&apos;.myviz&apos;).html(&apos;&lt;svg width=&quot;100%&quot; height=&quot;100%&quot;&gt;&apos; + result + &apos;&lt;/svg&gt;&apos;)
-}
-
-$(&apos;button#viz-group-by-attribute&apos;).click(function(){    
-    var attributeName = $(&apos;input#group-by-attribute&apos;).val()  
-    vizGroupByAttribute(attributeName)
-})</code></pre><script>var code ="// pokemonData is a global variable\r\nfcqData = 'not loaded yet'\r\n\r\n$.get('/data/fcq.clean.json')\r\n .success(function(data){\r\n     console.log('data loaded', data)\r\n     $('.myviz').html('number of records loaded: ' + data.length)\r\n     fcqData = data          \r\n })\r\n\r\n\r\nfunction vizCollege(){\r\n\r\n    // process fcqData\r\n\r\n    var groups = _.groupBy(fcqData, function(d){\r\n        return d['CrsPBAColl']\r\n    })\r\n\r\n    var dataArray = _.map(_.pairs(groups), function(p){\r\n        return {name: p[0], count: p[1].length}\r\n    })\r\n\r\n    console.log('dataArray', dataArray)\r\n\r\n\r\n    // define a template string\r\n    var tplString = '<g transform=\"translate(0 ${d.y})\"> \\\r\n                    <rect   \\\r\n                         width=\"${d.width}\" \\\r\n                         height=\"20\"    \\\r\n                         style=\"fill:${d.color};    \\\r\n                                stroke-width:3; \\\r\n                                stroke:rgb(0,0,0)\" />   \\\r\n                    </g>'\r\n\r\n    // compile the string to get a template function\r\n    var template = _.template(tplString)\r\n\r\n    function computeX(d, i) {\r\n        return 0\r\n    }\r\n\r\n    function computeWidth(d, i) {\r\n        return d['count'] / 5\r\n    }\r\n\r\n    function computeY(d, i) {\r\n        return i * 20\r\n    }\r\n\r\n    function computeColor(d, i) {\r\n        return 'red'\r\n    }\r\n\r\n    var viz = _.map(dataArray, function(d, i){\r\n                return {\r\n                    x: computeX(d, i),\r\n                    y: computeY(d, i),\r\n                    width: computeWidth(d, i),\r\n                    color: computeColor(d, i)\r\n                }\r\n             })\r\n    console.log('viz', viz)\r\n\r\n    var result = _.map(viz, function(d){\r\n             // invoke the compiled template function on each viz data\r\n             return template({d: d})\r\n         })\r\n    console.log('result', result)\r\n\r\n    $('.myviz').html('<svg width=\"100%\" height=\"100%\">' + result + '</svg>')\r\n}\r\n\r\n$('button#viz-college').click(vizCollege)\r\n\r\n// TODO: complete the code below\r\n// 1. Each horizontal bar should have a label\r\n// 2. Each horizontal bar should have a number indicating the count\r\nfunction vizGroupByAttribute(attributeName){\r\n    var groups = _.groupBy(fcqData, function(d){\r\n        return d[attributeName]\r\n    })\r\n\r\n    var dataArray = _.map(_.pairs(groups), function(p){\r\n        return {name: p[0], count: p[1].length}\r\n    })\r\n\r\n    console.log('dataArray', dataArray)\r\n\r\n\r\n    // define a template string\r\n    var tplString = '<g transform=\"translate(0 ${d.y})\"> \\\r\n                    <rect   \\\r\n                         width=\"${d.width}\" \\\r\n                         height=\"20\"    \\\r\n                         style=\"fill:${d.color};    \\\r\n                                stroke-width:1; \\\r\n                                stroke:rgb(0,0,0)\" />   \\\r\n                    <text transform=\"translate(${d.width + 10} 15)\">  \\\r\n                        ${d.label}  \\\r\n                    </text>  \\\r\n                    </g>'\r\n\r\n    // compile the string to get a template function\r\n    var template = _.template(tplString)\r\n\r\n    function computeX(d, i) {\r\n        return 0\r\n    }\r\n\r\n    function computeWidth(d, i) {\r\n        return d['count'] / 5\r\n    }\r\n\r\n    function computeY(d, i) {\r\n        return i * 20\r\n    }\r\n\r\n    function computeColor(d, i) {\r\n        return 'red'\r\n    }\r\n\r\n    function computeLabel(d, i){\r\n        return d.name + \": \" + d.count\r\n    }\r\n\r\n    var viz = _.map(dataArray, function(d, i){\r\n        return {\r\n            x: computeX(d, i),\r\n            y: computeY(d, i),\r\n            width: computeWidth(d, i),\r\n            color: computeColor(d, i),\r\n            label: computeLabel(d, i)\r\n        }\r\n     })\r\n    console.log('viz', viz)\r\n\r\n    var result = _.map(viz, function(d){\r\n             // invoke the compiled template function on each viz data\r\n             return template({d: d})\r\n         })\r\n    console.log('result', result)\r\n\r\n    $('.myviz').html('<svg width=\"100%\" height=\"100%\">' + result + '</svg>')\r\n}\r\n\r\n$('button#viz-group-by-attribute').click(function(){    \r\n    var attributeName = $('input#group-by-attribute').val()  \r\n    vizGroupByAttribute(attributeName)\r\n})"</script></p>
+</code></pre></p>
 
                     
                     </section>
@@ -619,10 +495,10 @@ $(&apos;button#viz-group-by-attribute&apos;).click(function(){
         </div>
 
         
-        <a href="../../learning/week7/pokemon-form.html" class="navigation navigation-prev " aria-label="Previous page: Pokemon (Form)"><i class="fa fa-angle-left"></i></a>
+        <a href="../../hackathons/netapp/index.html" class="navigation navigation-prev " aria-label="Previous page: NetApp"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../../hackathons/index.html" class="navigation navigation-next " aria-label="Next page: Hackathons"><i class="fa fa-angle-right"></i></a>
+        <a href="../../hackathons/yelp/warmup.html" class="navigation navigation-next " aria-label="Next page: Warmup"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
