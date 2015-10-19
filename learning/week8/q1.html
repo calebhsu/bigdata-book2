@@ -5,7 +5,7 @@
         <!-- head:start -->
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Form | book2</title>
+        <title>Q1 | book2</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.5.0-beta.4">
@@ -57,10 +57,10 @@
         
     
     
-    <link rel="next" href="../../learning/week7/jquery-load.html" />
+    <link rel="next" href="../../learning/week8/q2.html" />
     
     
-    <link rel="prev" href="../../learning/week7/jquery-click.html" />
+    <link rel="prev" href="../../learning/week8/team.html" />
     
 
         <!-- head:end -->
@@ -68,7 +68,7 @@
     <body>
         <!-- body:start -->
         
-    <div class="book" data-level="1.1.3" data-basepath="../.." data-revision="Sun Oct 18 2015 23:31:20 GMT-0600 (Mountain Daylight Time)">
+    <div class="book" data-level="1.2.2" data-basepath="../.." data-revision="Sun Oct 18 2015 23:31:20 GMT-0600 (Mountain Daylight Time)">
     
 
 <div class="book-summary">
@@ -158,7 +158,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.1.3" data-path="learning/week7/jquery-form.html">
+        <li class="chapter " data-level="1.1.3" data-path="learning/week7/jquery-form.html">
             
                 
                     <a href="../../learning/week7/jquery-form.html">
@@ -269,7 +269,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.2" data-path="learning/week8/q1.html">
+        <li class="chapter active" data-level="1.2.2" data-path="learning/week8/q1.html">
             
                 
                     <a href="../../learning/week8/q1.html">
@@ -459,92 +459,138 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="input">Input</h1>
-<p><input id="show" type="text" value="hello"> <button id="show">Show text</button></p>
-<p><input id="setcolor" type="text" value="green"> <button id="setcolor">Set Background Color</button></p>
-<p><input id="setheight" type="text" value="200"> <button id="setheight">Set Height</button></p>
-<h2 id="bars-1">Bars (1)</h2>
+                        <h1 id="individual-1-of-3">Individual 1 of 3</h1>
+<h2 id="how-many-businesses-in-city-x-have-less-than-y-stars">How many businesses in city X have less than Y stars?</h2>
 <div style="border:1px grey solid; padding:5px;">
-Number: <input id="bars1-number" type="text" value="5">
-<button id="bars1">Show Bars (1)</button>
-</div>
-
-<h2 id="bars-2">Bars (2)</h2>
-<div style="border:1px grey solid; padding:5px;">
-Number: <input id="bars2-number" type="text" value="5">
-Color:  <input id="bars2-color" type="text" value="red">
-<button id="bars2">Show Bars (2)</button>
-</div>
-
-<h2 id="bars-3">Bars (3)</h2>
-<div style="border:1px grey solid; padding:5px;">
-Number: <input id="bars3-number" type="text" value="5">
-Color:  <input id="bars3-color" type="text" value="red">
-Height:  <input id="bars3-height" type="text" value="50">
-<button id="bars3">Show Bars (3)</button>
+    <div><h5>City</h5>
+        <input id="arg1" type="text" value="Phoenix">
+    </div>
+    <div><h5>Stars</h5>
+        <input id="arg2" type="number" value="3">
+    </div> 
+    <div style="margin:20px;">
+        <button id="viz">Vizualize</button>
+    </div>
 </div>
 
 
-<h2 id="viz">Viz</h2>
-<div class="myviz" style="width:100%; height:100px; border: 1px black solid;">
+<div class="myviz" style="width:100%; height:500px; border: 1px black solid; padding: 5px;">
+Data is not loaded yet
 </div>
 
+<p><pre><code>items = &apos;not loaded yet&apos;
 
-<p><pre><code>$(&apos;button#show&apos;).click(function(){    
-    var value = $(&apos;input#show&apos;).val()    
-    console.log(value)
-    $(&apos;.myviz&apos;).html(value)
-})
+$.get(&apos;http://bigdatahci2015.github.io/data/yelp/yelp_academic_dataset_business.5000.json.lines.txt&apos;)
+    .success(function(data){        
+        var lines = data.trim().split(&apos;\n&apos;)
 
-$(&apos;button#setcolor&apos;).click(function(){
-    // Set the background color of the viz window to the specified color    
-    var value = $(&apos;input#setcolor&apos;).val() 
-    $(&apos;.myviz&apos;).css(&apos;background-color&apos;, value)
-})
+        // convert text lines to json arrays and save them in `items`
+        items = _.map(lines, JSON.parse)
 
-// Event handler for &quot;Set Height&quot; button to set the height of the
-// viz window to the specified value
-$(&apos;button#setheight&apos;).click(function(){
-    var value = parseInt($(&apos;input#setheight&apos;).val()) 
-    $(&apos;.myviz&apos;).height(value)
-})
+        console.log(&apos;number of items loaded:&apos;, items.length)
 
-// Event handler for &quot;Show Bars (1)&quot; to display a specified number of
-// vertical bars
-$(&apos;button#bars1&apos;).click(function(){   
-    var svg = &quot;&lt;svg&gt;&quot;
-    for (i = 0; i &lt; parseInt($(&apos;input#bars1-number&apos;).val()); i++) { 
-        svg += &quot;&lt;rect height=&apos;50&apos; width=&apos;10&apos; x=&apos;&quot; + i * 20 + &quot;&apos;/&gt;&quot; 
-    }
-    svg += &quot;&lt;/svg&gt;&quot;
-    $(&apos;.myviz&apos;).html(svg)    
-})
+        console.log(&apos;first item&apos;, items[0])
+     })
+     .error(function(e){
+         console.error(e)
+     })
 
-// Event handler for &quot;Show Bars (2)&quot; to display a specified number of
-// vertical bars in the specified color
-$(&apos;button#bars2&apos;).click(function(){   
-    var color = $(&apos;input#bars2-color&apos;).val()
-    var svg = &quot;&lt;svg style=&apos;fill:&quot; + color + &quot;;&apos;&gt;&quot;
-    for (i = 0; i &lt; parseInt($(&apos;input#bars2-number&apos;).val()); i++) { 
-        svg += &quot;&lt;rect height=&apos;50&apos; width=&apos;10&apos; x=&apos;&quot; + i * 20 + &quot;&apos;/&gt;&quot; 
-    }
-    svg += &quot;&lt;/svg&gt;&quot;
-    $(&apos;.myviz&apos;).html(svg)    
-})
+function viz(arg1, arg2, arg3){    
 
-// Event handler for &quot;Show Bars (3)&quot; to display a specified number of
-// vertical bars in the specified color at the specified height
-$(&apos;button#bars3&apos;).click(function(){   
-    var color = $(&apos;input#bars3-color&apos;).val()
-    var height = $(&apos;input#bars3-height&apos;).val()
+    // define a template string
+    var tplString = &apos;&lt;g transform=&quot;translate(0 ${d.y})&quot;&gt; \
+                    &lt;rect x=&quot;9&quot;   \
+                         width=&quot;${d.width}&quot; \
+                         height=&quot;30&quot;    \
+                         style=&quot;fill:${d.color};    \
+                                stroke-width:0; \
+                                stroke:rgb(0,0,0)&quot; /&gt;   \
+                    &lt;text x=&quot;10&quot; y=&quot;23&quot;&gt;${d.label}&lt;/text&gt; \
+                    &lt;/g&gt;&apos;
+
     
-    var svg = &quot;&lt;svg style=&apos;fill:&quot; + color + &quot;;&apos;&gt;&quot;
-    for (i = 0; i &lt; parseInt($(&apos;input#bars3-number&apos;).val()); i++) { 
-        svg += &quot;&lt;rect height=&apos;&quot; + height + &quot;&apos; width=&apos;10&apos; x=&apos;&quot; + i * 20 + &quot;&apos;/&gt;&quot; 
+    // compile the string to get a template function
+    var template = _.template(tplString)
+
+    function computeX(d, i) {
+        return 0
     }
-    svg += &quot;&lt;/svg&gt;&quot;
-    $(&apos;.myviz&apos;).html(svg)    
-})</code></pre><script>var code ="$('button#show').click(function(){    \r\n    var value = $('input#show').val()    \r\n    console.log(value)\r\n    $('.myviz').html(value)\r\n})\r\n\r\n$('button#setcolor').click(function(){\r\n    // Set the background color of the viz window to the specified color    \r\n    var value = $('input#setcolor').val() \r\n    $('.myviz').css('background-color', value)\r\n})\r\n\r\n// Event handler for \"Set Height\" button to set the height of the\r\n// viz window to the specified value\r\n$('button#setheight').click(function(){\r\n    var value = parseInt($('input#setheight').val()) \r\n    $('.myviz').height(value)\r\n})\r\n\r\n// Event handler for \"Show Bars (1)\" to display a specified number of\r\n// vertical bars\r\n$('button#bars1').click(function(){   \r\n    var svg = \"<svg>\"\r\n    for (i = 0; i < parseInt($('input#bars1-number').val()); i++) { \r\n        svg += \"<rect height='50' width='10' x='\" + i * 20 + \"'/>\" \r\n    }\r\n    svg += \"</svg>\"\r\n    $('.myviz').html(svg)    \r\n})\r\n\r\n// Event handler for \"Show Bars (2)\" to display a specified number of\r\n// vertical bars in the specified color\r\n$('button#bars2').click(function(){   \r\n    var color = $('input#bars2-color').val()\r\n    var svg = \"<svg style='fill:\" + color + \";'>\"\r\n    for (i = 0; i < parseInt($('input#bars2-number').val()); i++) { \r\n        svg += \"<rect height='50' width='10' x='\" + i * 20 + \"'/>\" \r\n    }\r\n    svg += \"</svg>\"\r\n    $('.myviz').html(svg)    \r\n})\r\n\r\n// Event handler for \"Show Bars (3)\" to display a specified number of\r\n// vertical bars in the specified color at the specified height\r\n$('button#bars3').click(function(){   \r\n    var color = $('input#bars3-color').val()\r\n    var height = $('input#bars3-height').val()\r\n    \r\n    var svg = \"<svg style='fill:\" + color + \";'>\"\r\n    for (i = 0; i < parseInt($('input#bars3-number').val()); i++) { \r\n        svg += \"<rect height='\" + height + \"' width='10' x='\" + i * 20 + \"'/>\" \r\n    }\r\n    svg += \"</svg>\"\r\n    $('.myviz').html(svg)    \r\n})"</script></p>
+
+    function computeWidth(d, i) {        
+        return d[1].length * 10
+    }
+
+    function computeY(d, i) {
+        return i * 35
+    }
+
+    function computeColor(d, i) {
+        return &apos;aquamarine&apos;
+    }
+
+    function computeLabel(d, i) {
+        return d[0] + &quot;: &quot;+ d[1].length
+    }
+
+    // Filter by city
+    var city = _.filter(items, function(d) {
+        return d.city == arg1
+    })
+    
+    // Filter by star rating (&lt;=)
+    var star = _.filter(city, function(d) {
+        return d.stars &lt;= arg2
+    })
+    
+    // Filter by business name
+    var name = _.filter(star, function(d) {
+        return d.name
+    })
+    
+    name = _.groupBy(name, &apos;name&apos;)
+    name = _.pairs(name)
+
+    name = _.sortBy(name, function(d){ 
+        return d[1].length
+    }).reverse() 
+
+    name = _.take(name, 20)
+
+    var viz = _.map(name, function(d, i){                
+                return {
+                    x: computeX(d, i),
+                    y: computeY(d, i),
+                    width: computeWidth(d, i),
+                    color: computeColor(d, i),
+                    label: computeLabel(d, i)
+                }
+             })
+
+    console.log(&apos;viz&apos;, viz)
+
+    var result = _.map(viz, function(d){
+             // invoke the compiled template function on each viz data
+             return template({d: d})
+         })
+    console.log(&apos;result&apos;, result)
+
+    $(&apos;.myviz&apos;).html(&apos;&lt;svg width=&quot;100%&quot; height=&quot;100%&quot;&gt;&apos; + result + &apos;&lt;/svg&gt;&apos;)
+}
+
+$(&apos;button#viz&apos;).click(function(){    
+    var arg1 = $(&apos;input#arg1&apos;).val()
+    var arg2 = $(&apos;input#arg2&apos;).val()    
+    viz(arg1, arg2)
+})</code></pre><script>var code ="items = 'not loaded yet'\r\n\r\n$.get('http://bigdatahci2015.github.io/data/yelp/yelp_academic_dataset_business.5000.json.lines.txt')\r\n    .success(function(data){        \r\n        var lines = data.trim().split('\\n')\r\n\r\n        // convert text lines to json arrays and save them in `items`\r\n        items = _.map(lines, JSON.parse)\r\n\r\n        console.log('number of items loaded:', items.length)\r\n\r\n        console.log('first item', items[0])\r\n     })\r\n     .error(function(e){\r\n         console.error(e)\r\n     })\r\n\r\nfunction viz(arg1, arg2, arg3){    \r\n\r\n    // define a template string\r\n    var tplString = '<g transform=\"translate(0 ${d.y})\"> \\\r\n                    <rect x=\"9\"   \\\r\n                         width=\"${d.width}\" \\\r\n                         height=\"30\"    \\\r\n                         style=\"fill:${d.color};    \\\r\n                                stroke-width:0; \\\r\n                                stroke:rgb(0,0,0)\" />   \\\r\n                    <text x=\"10\" y=\"23\">${d.label}</text> \\\r\n                    </g>'\r\n\r\n    \r\n    // compile the string to get a template function\r\n    var template = _.template(tplString)\r\n\r\n    function computeX(d, i) {\r\n        return 0\r\n    }\r\n\r\n    function computeWidth(d, i) {        \r\n        return d[1].length * 10\r\n    }\r\n\r\n    function computeY(d, i) {\r\n        return i * 35\r\n    }\r\n\r\n    function computeColor(d, i) {\r\n        return 'aquamarine'\r\n    }\r\n\r\n    function computeLabel(d, i) {\r\n        return d[0] + \": \"+ d[1].length\r\n    }\r\n\r\n    // Filter by city\r\n    var city = _.filter(items, function(d) {\r\n        return d.city == arg1\r\n    })\r\n    \r\n    // Filter by star rating (<=)\r\n    var star = _.filter(city, function(d) {\r\n        return d.stars <= arg2\r\n    })\r\n    \r\n    // Filter by business name\r\n    var name = _.filter(star, function(d) {\r\n        return d.name\r\n    })\r\n    \r\n    name = _.groupBy(name, 'name')\r\n    name = _.pairs(name)\r\n\r\n    name = _.sortBy(name, function(d){ \r\n        return d[1].length\r\n    }).reverse() \r\n\r\n    name = _.take(name, 20)\r\n\r\n    var viz = _.map(name, function(d, i){                \r\n                return {\r\n                    x: computeX(d, i),\r\n                    y: computeY(d, i),\r\n                    width: computeWidth(d, i),\r\n                    color: computeColor(d, i),\r\n                    label: computeLabel(d, i)\r\n                }\r\n             })\r\n\r\n    console.log('viz', viz)\r\n\r\n    var result = _.map(viz, function(d){\r\n             // invoke the compiled template function on each viz data\r\n             return template({d: d})\r\n         })\r\n    console.log('result', result)\r\n\r\n    $('.myviz').html('<svg width=\"100%\" height=\"100%\">' + result + '</svg>')\r\n}\r\n\r\n$('button#viz').click(function(){    \r\n    var arg1 = $('input#arg1').val()\r\n    var arg2 = $('input#arg2').val()    \r\n    viz(arg1, arg2)\r\n})"</script></p>
+<h1 id="authors">Authors</h1>
+<p>This UI is developed by</p>
+<ul>
+<li><a href="https://github.com/calebhsu/" target="_blank">Caleb Hsu</a></li>
+<li><a href="https://github.com/Linenfelser" target="_blank">Andrew Linenfelser</a></li>
+<li><a href="https://github.com/zhya215" target="_blank">Zhili Yang</a></li>
+<li><a href="https://github.com/AndreyShprengel" target="_blank">Andrey Shprengel</a></li>
+<li><a href="https://github.com/anbe6083" target="_blank">Andrew Berumen</a></li>
+</ul>
 
                     
                     </section>
@@ -555,10 +601,10 @@ $(&apos;button#bars3&apos;).click(function(){
         </div>
 
         
-        <a href="../../learning/week7/jquery-click.html" class="navigation navigation-prev " aria-label="Previous page: Click"><i class="fa fa-angle-left"></i></a>
+        <a href="../../learning/week8/team.html" class="navigation navigation-prev " aria-label="Previous page: Team"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../../learning/week7/jquery-load.html" class="navigation navigation-next " aria-label="Next page: Load"><i class="fa fa-angle-right"></i></a>
+        <a href="../../learning/week8/q2.html" class="navigation navigation-next " aria-label="Next page: Q2"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
