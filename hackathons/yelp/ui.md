@@ -80,7 +80,7 @@ function viz(arg1, arg2, arg3){
         return d[0] + ": "+ d[1].length
     }
 
-    // Filter by sate
+    // Filter by state
     var state = _.filter(items, function(d) {
         return d.state == arg3
     })
